@@ -1,0 +1,157 @@
+aid: bodytrace
+url: https://raw.githubusercontent.com/api-evangelist/bodytrace/refs/heads/main/apis.yml
+name: BodyTrace
+kind: company
+description: BodyTrace makes cellular-connected remote patient monitoring (RPM)
+  devices - blood pressure monitors, body-weight scales, and pulse oximeters - that
+  transmit readings directly over the cellular network with no phone, app, Wi-Fi, or
+  Bluetooth pairing required. Each device encrypts measurements end-to-end and sends
+  them to the BodyTrace platform, which exposes the data to healthcare organizations,
+  EHRs, and RPM programs over a simple HTTP API using HTTP Basic authentication.
+  Consumers can pull device readings (data values) on a polling loop or receive them
+  pushed to a configured HTTP endpoint. BodyTrace sells to organizations, not
+  individuals; API and device provisioning are arranged through BodyTrace sales.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Remote Patient Monitoring
+- RPM
+- Cellular
+- Medical Devices
+- Digital Health
+- Blood Pressure
+- Connected Devices
+- IoT
+created: '2026-07-05'
+modified: '2026-07-05'
+specificationVersion: '0.19'
+apis:
+- aid: bodytrace:bodytrace-observations-api
+  name: BodyTrace Observations (Data Values) API
+  tags:
+  - Observations
+  - Data Values
+  - Readings
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://us.data.bodytrace.com/1
+  properties:
+  - url: https://www.bodytrace.com/medical/
+    type: Documentation
+  - url: openapi/bodytrace-openapi.yml
+    type: OpenAPI
+  - url: collections/bodytrace.postman_collection.json
+    type: PostmanCollection
+  - url: collections/bodytrace.opencollection.json
+    type: OpenCollection
+  description: Retrieve the latest and historical device readings (data values) for a
+    provisioned device by IMEI - weight, systolic, diastolic, pulse, SpO2, battery
+    voltage, and signal strength - filtered by name and time range. This is the
+    confirmed, documented pull surface at GET /1/device/{imei}/datavalues.
+- aid: bodytrace:bodytrace-datamessages-api
+  name: BodyTrace Data Messages API
+  tags:
+  - Data Messages
+  - Raw Payloads
+  - Telemetry
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://us.data.bodytrace.com/1
+  properties:
+  - url: https://www.bodytrace.com/medical/
+    type: Documentation
+  - url: openapi/bodytrace-openapi.yml
+    type: OpenAPI
+  description: Retrieve the raw, per-transmission data messages a device has sent -
+    each carrying deviceId, ts (epoch ms), batteryVoltage, rssi/signalStrength, and a
+    values object - for a device by IMEI over a time range. Modeled from BodyTrace's
+    documented device message payload; exact query surface is gated behind account
+    credentials.
+- aid: bodytrace:bodytrace-devices-api
+  name: BodyTrace Devices API
+  tags:
+  - Devices
+  - Status
+  - Fleet
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://us.data.bodytrace.com/1
+  properties:
+  - url: https://www.bodytrace.com/medical/
+    type: Documentation
+  - url: openapi/bodytrace-openapi.yml
+    type: OpenAPI
+  description: List the cellular devices in an account and read a single device's
+    status - last seen, battery, signal, and provisioning state - keyed by IMEI.
+    Modeled from BodyTrace's device/IMEI-centric data model; the account-scoped
+    device listing is behind partner credentials.
+- aid: bodytrace:bodytrace-alerts-api
+  name: BodyTrace Alerts API
+  tags:
+  - Alerts
+  - Thresholds
+  - Notifications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://us.data.bodytrace.com/1
+  properties:
+  - url: https://www.bodytrace.com/medical/
+    type: Documentation
+  - url: openapi/bodytrace-openapi.yml
+    type: OpenAPI
+  description: Read threshold and connectivity alerts raised for a device - for
+    example a blood-pressure reading outside a configured range or a low-battery /
+    offline condition. Modeled RPM capability; alerting configuration is arranged with
+    BodyTrace and gated behind credentials.
+- aid: bodytrace:bodytrace-provisioning-api
+  name: BodyTrace Provisioning API
+  tags:
+  - Provisioning
+  - Enrollment
+  - Registration
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://us.data.bodytrace.com/1
+  properties:
+  - url: https://www.bodytrace.com/medical/
+    type: Documentation
+  - url: openapi/bodytrace-openapi.yml
+    type: OpenAPI
+  description: Associate a device (by IMEI) with an account, patient, or program and
+    configure where its measurements are delivered (a pushed HTTP endpoint). Modeled
+    from BodyTrace's documented onboarding flow; provisioning is completed with
+    BodyTrace and gated behind credentials.
+- aid: bodytrace:bodytrace-measurement-webhook-api
+  name: BodyTrace Measurement Webhook (Push) API
+  tags:
+  - Webhook
+  - Push
+  - Data Forwarding
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://your-endpoint.example.com
+  properties:
+  - url: https://www.bodytrace.com/medical/
+    type: Documentation
+  - url: openapi/bodytrace-openapi.yml
+    type: OpenAPI
+  description: Instead of polling, BodyTrace can push each measurement to a customer
+    HTTP endpoint. The device platform POSTs a JSON body (deviceId, ts, batteryVoltage,
+    rssi, values) to a URL you host, secured with HTTP Basic credentials you define.
+    Confirmed real-time delivery model - the endpoint is hosted by the consumer, not
+    by BodyTrace.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/bodytrace
+- type: Website
+  url: https://www.bodytrace.com
+- type: Documentation
+  url: https://www.bodytrace.com/medical/
+- type: Plans
+  url: plans/bodytrace-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/bodytrace-rate-limits.yml
+- type: FinOps
+  url: finops/bodytrace-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,85 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: BodyTrace
+providerId: bodytrace
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: false
+tags:
+- Remote Patient Monitoring
+- RPM
+- Cellular
+- Medical Devices
+- Plans
+description: >-
+  BodyTrace does not sell to individuals and does not publish a self-serve,
+  metered API price list. It sells cellular RPM devices and platform access to
+  organizations (healthcare providers, RPM programs, EHR/telehealth integrators)
+  on a per-device subscription that bundles the device, the embedded cellular
+  connectivity, the web monitoring interface, and API access. A commonly cited
+  figure for the connected scale is roughly $80 per device per year including
+  connectivity and API access; blood pressure monitors and pulse oximeters, and
+  volume/enterprise agreements, are quoted by BodyTrace sales. Exact current
+  rates are not reconciled here.
+notes: >-
+  The API itself is not separately metered - it is included with the device
+  subscription. Confirm current per-device pricing, connectivity terms, and any
+  platform/onboarding fees directly with BodyTrace sales during reconciliation.
+sources:
+- https://www.bodytrace.com
+- https://www.bodytrace.com/medical/
+- https://www.bodytrace.com/medical/faq.html
+plans:
+- id: bodytrace-device-subscription
+  name: Per-Device Subscription
+  type: subscription
+  description: >-
+    Annual per-device subscription bundling the cellular device, embedded
+    connectivity, the web-based monitoring interface, and API access. Commonly
+    cited around $80/device/year for the connected scale; other devices quoted by
+    sales.
+  entries:
+  - label: Device + Connectivity + API
+    name: device_subscription
+    type: subscription
+    metric: device
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: approx $80/device/year (scale; other devices quoted by sales)
+    userMultiplied: true
+  elements:
+  - name: Cellular Device
+  - name: Embedded Cellular Connectivity
+  - name: Web Monitoring Interface
+  - name: HTTP API Access
+  - name: End-to-End Encryption
+- id: bodytrace-enterprise
+  name: Enterprise / Volume
+  type: enterprise
+  description: >-
+    Negotiated agreement for RPM programs, health systems, and integrators
+    covering volume device pricing, provisioning support, data delivery
+    configuration (pull or pushed webhook), BAA/HIPAA terms, and SLAs. Contact
+    BodyTrace.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Volume Device Pricing
+  - name: Provisioning Support
+  - name: HIPAA / BAA
+  - name: SLAs and Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

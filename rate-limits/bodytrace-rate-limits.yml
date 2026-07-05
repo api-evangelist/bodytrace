@@ -1,0 +1,61 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: BodyTrace
+providerId: bodytrace
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: false
+tags:
+- Remote Patient Monitoring
+- RPM
+- Cellular
+- Rate Limiting
+- Quotas
+description: >-
+  BodyTrace does not publish fixed numeric API rate limits. In practice the data
+  volume is naturally bounded by the devices themselves: a cellular RPM device
+  transmits only a handful of measurements per day (a patient weighs in or takes
+  a blood-pressure reading a few times daily), plus periodic heartbeat messages.
+  Consumers reading via the data values pull endpoint should poll on a modest
+  interval rather than tight-loop, since new data only appears when a device
+  transmits. The push (webhook) delivery model avoids polling entirely - BodyTrace
+  POSTs each measurement to your endpoint as it arrives. Numeric per-account or
+  per-endpoint request caps are not documented and should be confirmed with
+  BodyTrace.
+notes: >-
+  Treat readings as low-frequency, event-driven data. Prefer the pushed webhook
+  where possible; when polling data values, use a sensible interval and honor any
+  429 with exponential backoff. Confirm any enforced limits with BodyTrace during
+  reconciliation.
+sources:
+- https://www.bodytrace.com/medical/
+- https://www.bodytrace.com/medical/faq.html
+responseCodes:
+  throttled: 429
+limits:
+- name: Data Values Pull Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented; poll on a modest interval since data is low-frequency.
+- name: Device Transmission Frequency
+  scope: device
+  metric: messages
+  limit: a few readings + heartbeats per day
+  notes: Bounded by patient behavior and device firmware, not by an API quota.
+- name: Push Delivery
+  scope: endpoint
+  metric: messages
+  limit: event-driven
+  notes: BodyTrace POSTs one measurement to your endpoint per transmission; you control throughput on your side.
+policies:
+- name: Prefer Push Over Poll
+  description: Use the customer-hosted webhook to receive measurements as they arrive rather than polling the data values endpoint.
+- name: Backoff Strategy
+  description: When polling, implement a modest interval and exponential backoff with jitter; honor Retry-After on any 429 response.
+- name: Idempotent Ingestion
+  description: De-duplicate on deviceId + ts, since a device may re-transmit and pushed deliveries can be retried.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BodyTrace RPM Data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Observations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Get device data values (CONFIRMED).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/datavalues?names=batteryVoltage,signalStrength,values/weight,values/unit",
+            "params": [
+              { "name": "imei", "value": "", "type": "path", "description": "Device IMEI (no leading zeros, no final digit)." },
+              { "name": "names", "value": "batteryVoltage,signalStrength,values/weight,values/unit", "type": "query", "description": "Comma-separated value names. For BP use values/systolic,values/diastolic,values/pulse." }
+            ]
+          },
+          "docs": "Confirmed. Retrieve latest/historical readings for a device by IMEI."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Data Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Get raw device data messages (modeled).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/datamessages",
+            "params": [
+              { "name": "imei", "value": "", "type": "path", "description": "Device IMEI." }
+            ]
+          },
+          "docs": "Modeled. Raw per-transmission messages (deviceId, ts, batteryVoltage, rssi, values) over a time range."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Devices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "List devices (modeled).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/devices"
+          },
+          "docs": "Modeled. List cellular devices provisioned in your account, keyed by IMEI."
+        },
+        {
+          "info": { "name": "Get device status (modeled).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/status",
+            "params": [
+              { "name": "imei", "value": "", "type": "path", "description": "Device IMEI." }
+            ]
+          },
+          "docs": "Modeled. Read a single device's status - last seen, battery, signal, provisioning state."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Alerts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "List device alerts (modeled).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/alerts",
+            "params": [
+              { "name": "imei", "value": "", "type": "path", "description": "Device IMEI." }
+            ]
+          },
+          "docs": "Modeled. Threshold and connectivity alerts raised for a device."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Provisioning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Provision a device (modeled).", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/provision",
+            "params": [
+              { "name": "imei", "value": "", "type": "path", "description": "Device IMEI." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"imei\": \"357872040012345\",\n  \"deviceType\": \"bloodPressure\",\n  \"externalId\": \"patient-123\",\n  \"pushUrl\": \"https://your-endpoint.example.com/bodytrace_measurements\"\n}" }
+          },
+          "docs": "Modeled. Associate a device with an account/patient and configure delivery (optional pushed HTTP endpoint)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

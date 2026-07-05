@@ -1,0 +1,130 @@
+{
+  "info": {
+    "name": "BodyTrace RPM Data API",
+    "description": "HTTP API for BodyTrace cellular-connected remote patient monitoring devices (blood pressure monitors, scales, pulse oximeters). Auth is HTTP Basic with credentials issued by BodyTrace. Base URL: https://us.data.bodytrace.com/1 (US) or https://eu.data.bodytrace.com/1 (EU). CONFIRMED: GET /device/{imei}/datavalues. Other requests are honestly modeled from BodyTrace's IMEI-centric data model and gated behind partner credentials.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{username}}", "type": "string" },
+      { "key": "password", "value": "{{password}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://us.data.bodytrace.com/1", "type": "string" },
+    { "key": "imei", "value": "", "type": "string" },
+    { "key": "username", "value": "", "type": "string" },
+    { "key": "password", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Observations",
+      "item": [
+        {
+          "name": "Get device data values (CONFIRMED)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/device/:imei/datavalues?names=batteryVoltage,signalStrength,values/weight,values/unit",
+              "host": ["{{baseUrl}}"],
+              "path": ["device", ":imei", "datavalues"],
+              "query": [
+                { "key": "names", "value": "batteryVoltage,signalStrength,values/weight,values/unit" }
+              ],
+              "variable": [{ "key": "imei", "value": "{{imei}}" }]
+            },
+            "description": "Confirmed. Retrieve latest/historical readings for a device by IMEI. For blood pressure use names=values/systolic,values/diastolic,values/pulse."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Data Messages",
+      "item": [
+        {
+          "name": "Get raw device data messages (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/device/:imei/datamessages",
+              "host": ["{{baseUrl}}"],
+              "path": ["device", ":imei", "datamessages"],
+              "variable": [{ "key": "imei", "value": "{{imei}}" }]
+            },
+            "description": "Modeled. Raw per-transmission messages (deviceId, ts, batteryVoltage, rssi, values) for a device over a time range."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Devices",
+      "item": [
+        {
+          "name": "List devices (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/devices", "host": ["{{baseUrl}}"], "path": ["devices"] },
+            "description": "Modeled. List cellular devices provisioned in your account, keyed by IMEI."
+          }
+        },
+        {
+          "name": "Get device status (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/device/:imei/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["device", ":imei", "status"],
+              "variable": [{ "key": "imei", "value": "{{imei}}" }]
+            },
+            "description": "Modeled. Read a single device's status - last seen, battery, signal, provisioning state."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Alerts",
+      "item": [
+        {
+          "name": "List device alerts (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/device/:imei/alerts",
+              "host": ["{{baseUrl}}"],
+              "path": ["device", ":imei", "alerts"],
+              "variable": [{ "key": "imei", "value": "{{imei}}" }]
+            },
+            "description": "Modeled. Threshold and connectivity alerts raised for a device."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Provisioning",
+      "item": [
+        {
+          "name": "Provision a device (modeled)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"imei\": \"357872040012345\",\n  \"deviceType\": \"bloodPressure\",\n  \"externalId\": \"patient-123\",\n  \"pushUrl\": \"https://your-endpoint.example.com/bodytrace_measurements\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/device/:imei/provision",
+              "host": ["{{baseUrl}}"],
+              "path": ["device", ":imei", "provision"],
+              "variable": [{ "key": "imei", "value": "{{imei}}" }]
+            },
+            "description": "Modeled. Associate a device with an account/patient and configure delivery (optional pushed HTTP endpoint)."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+aid: bodytrace
+name: BodyTrace
+review:
+  question: Does BodyTrace expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-05'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. BodyTrace's consumer-facing API is
+    request/response HTTP over HTTPS (HTTP Basic auth). Readings are obtained
+    either by polling the data values endpoint (GET /1/device/{imei}/datavalues)
+    or by BodyTrace pushing each measurement to a customer-hosted HTTP endpoint
+    (a webhook the consumer runs). Neither is a server-push streaming transport
+    on BodyTrace's own API - the push is server-to-your-endpoint HTTP, and the
+    pull is client-initiated polling. There is no WebSocket or SSE surface on
+    BodyTrace's API to model.
+findings:
+  summary: |
+    BodyTrace does not publish a documented public WebSocket API. BodyTrace makes
+    cellular-connected remote patient monitoring (RPM) devices - blood pressure
+    monitors, body-weight scales, and pulse oximeters - that transmit readings
+    directly over the cellular network to the BodyTrace platform. Healthcare
+    organizations read that data over a simple HTTP API secured with HTTP Basic
+    authentication, with a US region base of https://us.data.bodytrace.com/1
+    (an EU region exists). The one publicly and repeatedly documented endpoint is
+    the data values pull, GET /1/device/{imei}/datavalues?names=..., which returns
+    readings (weight, blood pressure, battery voltage, signal strength) for a
+    device by IMEI. Alternatively, BodyTrace can push each measurement as a JSON
+    POST (deviceId, ts, batteryVoltage, rssi, values) to a customer-hosted HTTP
+    endpoint. All of this is request/response HTTP; no realtime, bidirectional, or
+    streaming WebSocket (ws:// or wss://) endpoint is documented on BodyTrace's
+    API as of the review date.
+  publicApiStatus: |
+    Real but gated / partner-facing. BodyTrace has a genuine, documented HTTP API
+    for device readings, but it is not an open self-serve developer portal:
+    BodyTrace sells to organizations (not individuals), and device provisioning
+    plus API credentials are arranged through BodyTrace sales. The data values
+    pull endpoint and the device push-message payload are confirmed from
+    BodyTrace's materials and independent integrator docs (e.g. Validic) and
+    open-source clients. Additional logical surfaces (raw data messages, device
+    listing/status, alerts, provisioning) are honestly modeled from BodyTrace's
+    IMEI-centric data model and RPM feature set and are marked as modeled.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://us.data.bodytrace.com/1
+      documented: true
+      note: HTTP Basic auth. Data values pull is the confirmed public endpoint; EU region base also exists.
+    - protocol: HTTP Poll
+      scheme: https
+      documented: true
+      note: Consumers poll GET /1/device/{imei}/datavalues for new low-frequency readings. Client-initiated, not server push.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: BodyTrace POSTs each measurement (deviceId, ts, batteryVoltage, rssi, values) to a customer-hosted HTTP endpoint secured with HTTP Basic. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in BodyTrace's API materials as of the review date.
+  endpointsConfirmed:
+    - GET  https://us.data.bodytrace.com/1/device/{imei}/datavalues
+    - POST {customer-hosted-endpoint}  # BodyTrace pushes JSON measurements (deviceId, ts, batteryVoltage, rssi, values)
+  endpointsModeled:
+    - GET  https://us.data.bodytrace.com/1/device/{imei}/datamessages
+    - GET  https://us.data.bodytrace.com/1/devices
+    - GET  https://us.data.bodytrace.com/1/device/{imei}/status
+    - GET  https://us.data.bodytrace.com/1/device/{imei}/alerts
+    - POST https://us.data.bodytrace.com/1/device/{imei}/provision
+sources:
+  - url: https://www.bodytrace.com/medical/
+    type: Documentation
+    note: BodyTrace medical/RPM overview; describes cellular devices and API access for organizations.
+  - url: https://www.bodytrace.com/medical/faq.html
+    type: Documentation
+    note: FAQ - real-time weight data over a simple API; cellular (GSM) transmission; sold to organizations only.
+  - url: https://help.validic.com/space/VCS/1681457238
+    type: Documentation
+    note: Validic integrator knowledge base for the BodyTrace API integration.
+  - url: https://github.com/davidthewatson/bodytrace_python
+    type: SourceCode
+    note: Python client using GET https://us.data.bodytrace.com/1/device/{imei}/datavalues?names=... with HTTP Basic auth.
+  - url: https://github.com/espace/bodytrace
+    type: SourceCode
+    note: Rails gem documenting the device push payload (deviceId, ts, batteryVoltage, rssi, values{unit, weight, tare}) and HTTP Basic auth.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists, and BodyTrace's own consumer API is
+    request/response HTTP - a confirmed data values pull plus an optional
+    server-to-endpoint push (webhook) to a customer-hosted URL. No AsyncAPI
+    document was created because there is no server-push streaming transport
+    (WebSocket or SSE) on BodyTrace's API to model. The apis.yml catalogs the
+    confirmed and honestly-modeled logical APIs with OpenAPI, plans, rate limits,
+    and FinOps.

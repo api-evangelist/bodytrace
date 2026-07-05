@@ -1,0 +1,91 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: BodyTrace
+providerId: bodytrace
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: false
+tags:
+- Remote Patient Monitoring
+- RPM
+- Cellular
+- Medical Devices
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of BodyTrace spend. BodyTrace cost is driven by devices, not by API
+  calls: each cellular device carries an annual per-device subscription that
+  bundles the hardware, embedded cellular connectivity, the web interface, and API
+  access. There is no separate metered API charge. The dominant cost driver is the
+  count of active provisioned devices in the field; secondary costs are internal
+  (the compute you run to poll or receive and store readings). Enterprise/volume
+  agreements cover larger RPM programs.
+notes: >-
+  Per-device rates are not reconciled here; confirm with BodyTrace sales. The main
+  FinOps lever is device fleet management - deprovision or reclaim inactive
+  devices so you stop paying subscription for units no longer transmitting.
+sources:
+- https://www.bodytrace.com
+- https://www.bodytrace.com/medical/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: BodyTrace
+serviceCategory: Healthcare and Medical Devices
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Annual
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: BodyTrace RPM Platform
+  ServiceCategory: Healthcare and Medical Devices
+  ProviderName: BodyTrace
+  PublisherName: BodyTrace
+  InvoiceIssuerName: BodyTrace
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: active_devices
+  description: Count of provisioned cellular devices under subscription, the primary cost driver.
+  unit: devices
+  aggregation: sum
+  dimensions:
+  - account
+  - deviceType
+  - program
+- name: device_year
+  description: Device-years of subscription (device count times annual term).
+  unit: device_years
+  aggregation: sum
+  dimensions:
+  - account
+  - deviceType
+- name: internal_ingestion_compute
+  description: Internal cost of polling or receiving and storing readings (no BodyTrace invoice).
+  unit: hours
+  aggregation: sum
+  dimensions:
+  - deployment
+principles:
+- name: Visibility
+  description: Track active vs inactive devices and their transmission recency; an idle device still costs subscription.
+- name: Allocation
+  description: Tag devices by program, clinic, or patient cohort so subscription cost maps to internal cost centers.
+- name: Optimization
+  description: Reclaim and deprovision devices that have stopped transmitting; right-size fleet to enrolled-patient count; prefer pushed delivery to cut internal polling compute.
+- name: Accountability
+  description: Assign a device-fleet owner; review device counts against active enrollment each billing cycle.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
