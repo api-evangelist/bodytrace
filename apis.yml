@@ -140,6 +140,10 @@ apis:
     Confirmed real-time delivery model - the endpoint is hosted by the consumer, not
     by BodyTrace.
 common:
+- type: DomainSecurity
+  url: security/bodytrace-domain-security.yml
+- type: Authentication
+  url: authentication/bodytrace-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/bodytrace
 - type: Website

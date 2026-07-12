@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/bodytrace-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic authentication using the username and password issued by BodyTrace
+    for your account. The same credential model secures the customer-hosted push endpoint (you
+    define the username/password BodyTrace uses when POSTing measurements to you).
+  sources:
+  - openapi/bodytrace-openapi.yml
