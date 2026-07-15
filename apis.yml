@@ -140,6 +140,8 @@ apis:
     Confirmed real-time delivery model - the endpoint is hosted by the consumer, not
     by BodyTrace.
 common:
+- type: AgenticAccess
+  url: agentic-access/bodytrace-agentic-access.yml
 - type: DomainSecurity
   url: security/bodytrace-domain-security.yml
 - type: Authentication
