@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: BodyTrace RPM Data Alerts API
+  description: 'HTTP API for BodyTrace cellular-connected remote patient monitoring (RPM) devices - blood pressure monitors, body-weight scales, and pulse oximeters. Devices transmit measurements directly over the cellular network to the BodyTrace platform; healthcare organizations then read those readings over this API. Authentication is HTTP Basic using credentials issued by BodyTrace.
+
+    Scope and honesty note: BodyTrace does not publish an open, self-serve developer portal - device provisioning and API credentials are arranged through BodyTrace sales, and the reference docs live behind partner onboarding (BodyTrace''s own docs plus integrator guides such as Validic). The one endpoint publicly and repeatedly documented in the wild is the data values pull, `GET /1/device/{imei}/datavalues`, and the device push message payload. Those are marked CONFIRMED below. The remaining operations (raw data messages, device listing/status, alerts, and provisioning) are HONESTLY MODELED from BodyTrace''s documented IMEI-centric data model and RPM feature set; their exact paths and parameters should be verified against the partner documentation you receive with credentials. Modeled operations carry `x-endpoint-status: modeled`; confirmed ones carry `x-endpoint-status: confirmed`.
+
+    Delivery model: readings can be pulled from the data values endpoint on a polling loop, or pushed by BodyTrace to a customer-hosted HTTP endpoint (a webhook you host and secure). There is no documented public WebSocket surface.'
+  version: '1.0'
+  contact:
+    name: BodyTrace
+    url: https://www.bodytrace.com
+  license:
+    name: Proprietary
+    url: https://www.bodytrace.com
+servers:
+- url: https://us.data.bodytrace.com/1
+  description: BodyTrace US data region
+- url: https://eu.data.bodytrace.com/1
+  description: BodyTrace EU data region (region assigned by BodyTrace)
+security:
+- basicAuth: []
+tags:
+- name: Alerts
+  description: Modeled threshold and connectivity alerts.
+paths:
+  /device/{imei}/alerts:
+    parameters:
+    - $ref: '#/components/parameters/Imei'
+    get:
+      operationId: listDeviceAlerts
+      tags:
+      - Alerts
+      summary: List device alerts
+      description: List threshold and connectivity alerts raised for a device - for example a blood-pressure reading outside a configured range, or a low-battery / offline condition. MODELED RPM capability; alert configuration is arranged with BodyTrace and gated behind credentials.
+      x-endpoint-status: modeled
+      responses:
+        '200':
+          description: A list of alerts.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Alert'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Alert:
+      type: object
+      description: A threshold or connectivity alert raised for a device.
+      properties:
+        id:
+          type: string
+        imei:
+          type: string
+        type:
+          type: string
+          description: Alert type, e.g. threshold, lowBattery, offline.
+          enum:
+          - threshold
+          - lowBattery
+          - offline
+        metric:
+          type: string
+          description: The measurement that triggered a threshold alert, e.g. systolic.
+        value:
+          type: number
+        ts:
+          type: integer
+          format: int64
+        message:
+          type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+  parameters:
+    Imei:
+      name: imei
+      in: path
+      required: true
+      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
+      schema:
+        type: string
+      example: '357872040012345'
+  responses:
+    Unauthorized:
+      description: Missing or invalid HTTP Basic credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The device or resource was not found / not registered.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using the username and password issued by BodyTrace for your account. The same credential model secures the customer-hosted push endpoint (you define the username/password BodyTrace uses when POSTing measurements to you).
