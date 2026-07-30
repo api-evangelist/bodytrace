@@ -11,7 +11,20 @@ description: BodyTrace makes cellular-connected remote patient monitoring (RPM)
   Consumers can pull device readings (data values) on a polling loop or receive them
   pushed to a configured HTTP endpoint. BodyTrace sells to organizations, not
   individuals; API and device provisioning are arranged through BodyTrace sales.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bodytrace.png
 tags:
 - Remote Patient Monitoring
 - RPM
@@ -25,120 +38,86 @@ created: '2026-07-05'
 modified: '2026-07-05'
 specificationVersion: '0.19'
 apis:
-- aid: bodytrace:bodytrace-observations-api
-  name: BodyTrace Observations (Data Values) API
-  tags:
-  - Observations
-  - Data Values
-  - Readings
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.bodytrace.com/medical/
-  baseURL: https://us.data.bodytrace.com/1
-  properties:
-  - url: https://www.bodytrace.com/medical/
-    type: Documentation
-  - url: openapi/bodytrace-openapi.yml
-    type: OpenAPI
-  - url: collections/bodytrace.postman_collection.json
-    type: PostmanCollection
-  - url: collections/bodytrace.opencollection.json
-    type: OpenCollection
-  description: Retrieve the latest and historical device readings (data values) for a
-    provisioned device by IMEI - weight, systolic, diastolic, pulse, SpO2, battery
-    voltage, and signal strength - filtered by name and time range. This is the
-    confirmed, documented pull surface at GET /1/device/{imei}/datavalues.
-- aid: bodytrace:bodytrace-datamessages-api
-  name: BodyTrace Data Messages API
-  tags:
-  - Data Messages
-  - Raw Payloads
-  - Telemetry
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.bodytrace.com/medical/
-  baseURL: https://us.data.bodytrace.com/1
-  properties:
-  - url: https://www.bodytrace.com/medical/
-    type: Documentation
-  - url: openapi/bodytrace-openapi.yml
-    type: OpenAPI
-  description: Retrieve the raw, per-transmission data messages a device has sent -
-    each carrying deviceId, ts (epoch ms), batteryVoltage, rssi/signalStrength, and a
-    values object - for a device by IMEI over a time range. Modeled from BodyTrace's
-    documented device message payload; exact query surface is gated behind account
-    credentials.
-- aid: bodytrace:bodytrace-devices-api
-  name: BodyTrace Devices API
-  tags:
-  - Devices
-  - Status
-  - Fleet
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.bodytrace.com/medical/
-  baseURL: https://us.data.bodytrace.com/1
-  properties:
-  - url: https://www.bodytrace.com/medical/
-    type: Documentation
-  - url: openapi/bodytrace-openapi.yml
-    type: OpenAPI
-  description: List the cellular devices in an account and read a single device's
-    status - last seen, battery, signal, and provisioning state - keyed by IMEI.
-    Modeled from BodyTrace's device/IMEI-centric data model; the account-scoped
-    device listing is behind partner credentials.
 - aid: bodytrace:bodytrace-alerts-api
   name: BodyTrace Alerts API
+  description: Modeled threshold and connectivity alerts.
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://us.data.bodytrace.com/1
   tags:
   - Alerts
-  - Thresholds
-  - Notifications
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: OpenAPI
+    url: openapi/bodytrace-alerts-api-openapi.yml
+  - type: Documentation
+    url: https://www.bodytrace.com/medical/
+  - type: PostmanCollection
+    url: collections/bodytrace.postman_collection.json
+  - type: OpenCollection
+    url: collections/bodytrace.opencollection.json
+- aid: bodytrace:bodytrace-data-messages-api
+  name: BodyTrace Data Messages API
+  description: Modeled surface for raw per-transmission device messages.
   humanURL: https://www.bodytrace.com/medical/
   baseURL: https://us.data.bodytrace.com/1
+  tags:
+  - Data Messages
   properties:
-  - url: https://www.bodytrace.com/medical/
-    type: Documentation
-  - url: openapi/bodytrace-openapi.yml
-    type: OpenAPI
-  description: Read threshold and connectivity alerts raised for a device - for
-    example a blood-pressure reading outside a configured range or a low-battery /
-    offline condition. Modeled RPM capability; alerting configuration is arranged with
-    BodyTrace and gated behind credentials.
+  - type: OpenAPI
+    url: openapi/bodytrace-data-messages-api-openapi.yml
+  - type: Documentation
+    url: https://www.bodytrace.com/medical/
+  - type: PostmanCollection
+    url: collections/bodytrace.postman_collection.json
+  - type: OpenCollection
+    url: collections/bodytrace.opencollection.json
+- aid: bodytrace:bodytrace-devices-api
+  name: BodyTrace Devices API
+  description: Modeled device listing and status keyed by IMEI.
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://us.data.bodytrace.com/1
+  tags:
+  - Devices
+  properties:
+  - type: OpenAPI
+    url: openapi/bodytrace-devices-api-openapi.yml
+  - type: Documentation
+    url: https://www.bodytrace.com/medical/
+  - type: PostmanCollection
+    url: collections/bodytrace.postman_collection.json
+  - type: OpenCollection
+    url: collections/bodytrace.opencollection.json
+- aid: bodytrace:bodytrace-observations-api
+  name: BodyTrace Observations API
+  description: Confirmed pull surface for device readings (data values).
+  humanURL: https://www.bodytrace.com/medical/
+  baseURL: https://us.data.bodytrace.com/1
+  tags:
+  - Observations
+  properties:
+  - type: OpenAPI
+    url: openapi/bodytrace-observations-api-openapi.yml
+  - type: Documentation
+    url: https://www.bodytrace.com/medical/
+  - type: PostmanCollection
+    url: collections/bodytrace.postman_collection.json
+  - type: OpenCollection
+    url: collections/bodytrace.opencollection.json
 - aid: bodytrace:bodytrace-provisioning-api
   name: BodyTrace Provisioning API
-  tags:
-  - Provisioning
-  - Enrollment
-  - Registration
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  description: Modeled device enrollment and delivery configuration.
   humanURL: https://www.bodytrace.com/medical/
   baseURL: https://us.data.bodytrace.com/1
-  properties:
-  - url: https://www.bodytrace.com/medical/
-    type: Documentation
-  - url: openapi/bodytrace-openapi.yml
-    type: OpenAPI
-  description: Associate a device (by IMEI) with an account, patient, or program and
-    configure where its measurements are delivered (a pushed HTTP endpoint). Modeled
-    from BodyTrace's documented onboarding flow; provisioning is completed with
-    BodyTrace and gated behind credentials.
-- aid: bodytrace:bodytrace-measurement-webhook-api
-  name: BodyTrace Measurement Webhook (Push) API
   tags:
-  - Webhook
-  - Push
-  - Data Forwarding
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.bodytrace.com/medical/
-  baseURL: https://your-endpoint.example.com
+  - Provisioning
   properties:
-  - url: https://www.bodytrace.com/medical/
-    type: Documentation
-  - url: openapi/bodytrace-openapi.yml
-    type: OpenAPI
-  description: Instead of polling, BodyTrace can push each measurement to a customer
-    HTTP endpoint. The device platform POSTs a JSON body (deviceId, ts, batteryVoltage,
-    rssi, values) to a URL you host, secured with HTTP Basic credentials you define.
-    Confirmed real-time delivery model - the endpoint is hosted by the consumer, not
-    by BodyTrace.
+  - type: OpenAPI
+    url: openapi/bodytrace-provisioning-api-openapi.yml
+  - type: Documentation
+    url: https://www.bodytrace.com/medical/
+  - type: PostmanCollection
+    url: collections/bodytrace.postman_collection.json
+  - type: OpenCollection
+    url: collections/bodytrace.opencollection.json
 common:
 - type: AgenticAccess
   url: agentic-access/bodytrace-agentic-access.yml
