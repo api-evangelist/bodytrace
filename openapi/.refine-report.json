@@ -1,0 +1,22 @@
+{
+  "provider": "bodytrace",
+  "sources": [
+    "bodytrace-alerts-api-openapi.yml",
+    "bodytrace-data-messages-api-openapi.yml",
+    "bodytrace-devices-api-openapi.yml",
+    "bodytrace-observations-api-openapi.yml",
+    "bodytrace-provisioning-api-openapi.yml"
+  ],
+  "outputs": [
+    "bodytrace-alerts-api-openapi.yml",
+    "bodytrace-data-messages-api-openapi.yml",
+    "bodytrace-devices-api-openapi.yml",
+    "bodytrace-observations-api-openapi.yml",
+    "bodytrace-provisioning-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
