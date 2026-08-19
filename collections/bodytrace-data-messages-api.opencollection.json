@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BodyTrace RPM Data Alerts Data Messages API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get raw device data messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/datamessages",
+            "params": [
+              {
+                "name": "imei",
+                "value": "357872040012345",
+                "type": "path",
+                "description": "The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the time window, epoch milliseconds (UTC)."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the time window, epoch milliseconds (UTC)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of messages to return."
+              }
+            ]
+          },
+          "docs": "Retrieve the raw, per-transmission messages a device has sent over the cellular network for a given IMEI and time range. Each message mirrors the payload BodyTrace devices emit (deviceId, ts, batteryVoltage, rssi, and a values object). MODELED - the message payload shape is confirmed from BodyTrace's documented device messages, but this read/query surface is gated behind partner credentials; verify path and parameters against your onboarding docs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

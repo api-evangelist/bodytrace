@@ -1,0 +1,307 @@
+{
+  "item": [
+    {
+      "id": "adba8d9b-02c9-4f68-89af-41ff5ef552b4",
+      "name": "Data Messages",
+      "description": {
+        "content": "Modeled surface for raw per-transmission device messages.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1db51057-1c16-4a7b-8186-6805e742bfa2",
+          "name": "Get raw device data messages",
+          "request": {
+            "name": "Get raw device data messages",
+            "description": {
+              "content": "Retrieve the raw, per-transmission messages a device has sent over the cellular network for a given IMEI and time range. Each message mirrors the payload BodyTrace devices emit (deviceId, ts, batteryVoltage, rssi, and a values object). MODELED - the message payload shape is confirmed from BodyTrace's documented device messages, but this read/query surface is gated behind partner credentials; verify path and parameters against your onboarding docs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "device",
+                ":imei",
+                "datamessages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<long>",
+                  "description": "Start of the time window, epoch milliseconds (UTC)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<long>",
+                  "description": "End of the time window, epoch milliseconds (UTC)."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of messages to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imei",
+                  "description": "(Required) The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29e4250e-e1ba-4690-b6f2-6c86636f3d47",
+              "name": "A list of raw device messages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "device",
+                    ":imei",
+                    "datamessages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imei",
+                      "description": "(Required) The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"deviceId\": \"string\",\n    \"ts\": 2030,\n    \"batteryVoltage\": 6519,\n    \"rssi\": 5738,\n    \"values\": {\n      \"unit\": 5424,\n      \"weight\": 6138,\n      \"tare\": 4335,\n      \"systolic\": 5400,\n      \"diastolic\": 9684,\n      \"pulse\": 8295,\n      \"spo2\": 9016,\n      \"key_0\": 1024.843772268631\n    }\n  },\n  {\n    \"deviceId\": \"string\",\n    \"ts\": 9365,\n    \"batteryVoltage\": 6575,\n    \"rssi\": 1173,\n    \"values\": {\n      \"unit\": 9936,\n      \"weight\": 9567,\n      \"tare\": 5596,\n      \"systolic\": 1035,\n      \"diastolic\": 1736,\n      \"pulse\": 6787,\n      \"spo2\": 6705\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6574cd9e-d00d-4c2d-b786-2204a4cb8048",
+              "name": "Missing or invalid HTTP Basic credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "device",
+                    ":imei",
+                    "datamessages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imei",
+                      "description": "(Required) The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1ec1acd-182f-49d8-9678-6223d6fac1dd",
+              "name": "The device or resource was not found / not registered.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "device",
+                    ":imei",
+                    "datamessages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imei",
+                      "description": "(Required) The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://us.data.bodytrace.com/1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "93a378ea-29f1-4293-b813-3e4994fc2a0f",
+    "name": "BodyTrace RPM Data Alerts Data Messages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HTTP API for BodyTrace cellular-connected remote patient monitoring (RPM) devices - blood pressure monitors, body-weight scales, and pulse oximeters. Devices transmit measurements directly over the cellular network to the BodyTrace platform; healthcare organizations then read those readings over this API. Authentication is HTTP Basic using credentials issued by BodyTrace.\nScope and honesty note: BodyTrace does not publish an open, self-serve developer portal - device provisioning and API credentials are arranged through BodyTrace sales, and the reference docs live behind partner onboarding (BodyTrace's own docs plus integrator guides such as Validic). The one endpoint publicly and repeatedly documented in the wild is the data values pull, `GET /1/device/{imei}/datavalues`, and the device push message payload. Those are marked CONFIRMED below. The remaining operations (raw data messages, device listing/status, alerts, and provisioning) are HONESTLY MODELED from BodyTrace's documented IMEI-centric data model and RPM feature set; their exact paths and parameters should be verified against the partner documentation you receive with credentials. Modeled operations carry `x-endpoint-status: modeled`; confirmed ones carry `x-endpoint-status: confirmed`.\nDelivery model: readings can be pulled from the data values endpoint on a polling loop, or pushed by BodyTrace to a customer-hosted HTTP endpoint (a webhook you host and secure). There is no documented public WebSocket surface.\n\nContact Support:\n Name: BodyTrace",
+      "type": "text/plain"
+    }
+  }
+}

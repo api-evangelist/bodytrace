@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BodyTrace RPM Data Alerts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Alerts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List device alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/alerts",
+            "params": [
+              {
+                "name": "imei",
+                "value": "357872040012345",
+                "type": "path",
+                "description": "The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+              }
+            ]
+          },
+          "docs": "List threshold and connectivity alerts raised for a device - for example a blood-pressure reading outside a configured range, or a low-battery / offline condition. MODELED RPM capability; alert configuration is arranged with BodyTrace and gated behind credentials."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

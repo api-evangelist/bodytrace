@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BodyTrace RPM Data Alerts Observations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Observations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get device data values (readings)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/datavalues",
+            "params": [
+              {
+                "name": "imei",
+                "value": "357872040012345",
+                "type": "path",
+                "description": "The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of value names to return, e.g. `batteryVoltage,signalStrength,values/weight,values/unit`. For blood pressure use `values/systolic,values/diastolic,values/pulse`."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the time window, epoch milliseconds (UTC)."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the time window, epoch milliseconds (UTC)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of readings to return."
+              }
+            ]
+          },
+          "docs": "Retrieve the latest and historical readings for a device by IMEI. Use the `names` query parameter to select which values to return - for example `values/weight`, `values/systolic`, `values/diastolic`, `values/pulse`, `batteryVoltage`, and `signalStrength` - and optionally bound the results with a time range. This is the confirmed, publicly documented BodyTrace pull endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

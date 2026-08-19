@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BodyTrace RPM Data Alerts Devices API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Devices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/devices"
+          },
+          "docs": "List the cellular devices provisioned in your account, keyed by IMEI. MODELED - BodyTrace's model is device/IMEI centric, but an account-scoped listing endpoint is gated behind partner credentials; verify against your onboarding docs."
+        },
+        {
+          "info": {
+            "name": "Get device status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/status",
+            "params": [
+              {
+                "name": "imei",
+                "value": "357872040012345",
+                "type": "path",
+                "description": "The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+              }
+            ]
+          },
+          "docs": "Read a single device's status by IMEI - last seen timestamp, battery voltage, signal strength, and provisioning state. MODELED from BodyTrace's device data model; verify against your onboarding docs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

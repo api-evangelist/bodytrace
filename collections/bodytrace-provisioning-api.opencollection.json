@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BodyTrace RPM Data Alerts Provisioning API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Provisioning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Provision a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.data.bodytrace.com/1/device/:imei/provision",
+            "params": [
+              {
+                "name": "imei",
+                "value": "357872040012345",
+                "type": "path",
+                "description": "The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Associate a device (by IMEI) with an account, patient, or program and configure where its measurements are delivered - including an optional pushed HTTP endpoint (webhook) that BodyTrace should POST readings to. MODELED from BodyTrace's documented onboarding flow; provisioning is completed with BodyTrace and gated behind credentials."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

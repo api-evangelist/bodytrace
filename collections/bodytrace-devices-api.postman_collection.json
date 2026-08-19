@@ -1,0 +1,370 @@
+{
+  "item": [
+    {
+      "id": "bab614d2-44a0-4eb3-a123-d21f93c973d3",
+      "name": "Devices",
+      "description": {
+        "content": "Modeled device listing and status keyed by IMEI.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "238fb14c-9efe-4711-8b52-5981024e16a5",
+          "name": "List devices",
+          "request": {
+            "name": "List devices",
+            "description": {
+              "content": "List the cellular devices provisioned in your account, keyed by IMEI. MODELED - BodyTrace's model is device/IMEI centric, but an account-scoped listing endpoint is gated behind partner credentials; verify against your onboarding docs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "devices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "af56030a-50e7-4d66-bcc8-d6b8bf8cbbc7",
+              "name": "A list of devices.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"imei\": \"string\",\n      \"deviceType\": \"pulseOximeter\",\n      \"lastSeen\": 7824,\n      \"batteryVoltage\": 8440,\n      \"signalStrength\": 8352,\n      \"provisioned\": true\n    },\n    {\n      \"imei\": \"string\",\n      \"deviceType\": \"pulseOximeter\",\n      \"lastSeen\": 7207,\n      \"batteryVoltage\": 704,\n      \"signalStrength\": 3668,\n      \"provisioned\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "640eae37-8b1c-4ad8-aabf-4417d69fd9c2",
+              "name": "Missing or invalid HTTP Basic credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8d80aa9-bb8b-44f1-820d-a0179a5678ec",
+          "name": "Get device status",
+          "request": {
+            "name": "Get device status",
+            "description": {
+              "content": "Read a single device's status by IMEI - last seen timestamp, battery voltage, signal strength, and provisioning state. MODELED from BodyTrace's device data model; verify against your onboarding docs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "device",
+                ":imei",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imei",
+                  "description": "(Required) The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "43ce0fc4-119e-4918-8db3-8ba15d00e65f",
+              "name": "The device status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "device",
+                    ":imei",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imei",
+                      "description": "(Required) The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"imei\": \"string\",\n  \"deviceType\": \"bloodPressure\",\n  \"lastSeen\": 2638,\n  \"batteryVoltage\": 4891,\n  \"signalStrength\": 5813,\n  \"provisioned\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6632db41-b37c-4332-a93b-dd771a3b6dee",
+              "name": "Missing or invalid HTTP Basic credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "device",
+                    ":imei",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imei",
+                      "description": "(Required) The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "855c47e3-04e4-4d2e-80fc-7b771cba638b",
+              "name": "The device or resource was not found / not registered.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "device",
+                    ":imei",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imei",
+                      "description": "(Required) The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://us.data.bodytrace.com/1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4fb2d811-d17b-461a-a15e-23154a00e69a",
+    "name": "BodyTrace RPM Data Alerts Devices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HTTP API for BodyTrace cellular-connected remote patient monitoring (RPM) devices - blood pressure monitors, body-weight scales, and pulse oximeters. Devices transmit measurements directly over the cellular network to the BodyTrace platform; healthcare organizations then read those readings over this API. Authentication is HTTP Basic using credentials issued by BodyTrace.\nScope and honesty note: BodyTrace does not publish an open, self-serve developer portal - device provisioning and API credentials are arranged through BodyTrace sales, and the reference docs live behind partner onboarding (BodyTrace's own docs plus integrator guides such as Validic). The one endpoint publicly and repeatedly documented in the wild is the data values pull, `GET /1/device/{imei}/datavalues`, and the device push message payload. Those are marked CONFIRMED below. The remaining operations (raw data messages, device listing/status, alerts, and provisioning) are HONESTLY MODELED from BodyTrace's documented IMEI-centric data model and RPM feature set; their exact paths and parameters should be verified against the partner documentation you receive with credentials. Modeled operations carry `x-endpoint-status: modeled`; confirmed ones carry `x-endpoint-status: confirmed`.\nDelivery model: readings can be pulled from the data values endpoint on a polling loop, or pushed by BodyTrace to a customer-hosted HTTP endpoint (a webhook you host and secure). There is no documented public WebSocket surface.\n\nContact Support:\n Name: BodyTrace",
+      "type": "text/plain"
+    }
+  }
+}
