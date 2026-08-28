@@ -11,6 +11,18 @@ description: BodyTrace makes cellular-connected remote patient monitoring (RPM)
   Consumers can pull device readings (data values) on a polling loop or receive them
   pushed to a configured HTTP endpoint. BodyTrace sells to organizations, not
   individuals; API and device provisioning are arranged through BodyTrace sales.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
