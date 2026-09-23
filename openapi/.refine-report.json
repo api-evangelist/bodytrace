@@ -1,11 +1,7 @@
 {
   "provider": "bodytrace",
   "sources": [
-    "bodytrace-alerts-api-openapi.yml",
-    "bodytrace-data-messages-api-openapi.yml",
-    "bodytrace-devices-api-openapi.yml",
-    "bodytrace-observations-api-openapi.yml",
-    "bodytrace-provisioning-api-openapi.yml"
+    "_original/bodytrace-openapi.yml"
   ],
   "outputs": [
     "bodytrace-alerts-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "bodytrace-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "bodytrace-alerts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bodytrace-data-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bodytrace-devices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bodytrace-observations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bodytrace-provisioning-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

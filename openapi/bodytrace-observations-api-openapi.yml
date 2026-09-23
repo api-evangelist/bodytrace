@@ -1,11 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: BodyTrace RPM Data Alerts Observations API
-  description: 'HTTP API for BodyTrace cellular-connected remote patient monitoring (RPM) devices - blood pressure monitors, body-weight scales, and pulse oximeters. Devices transmit measurements directly over the cellular network to the BodyTrace platform; healthcare organizations then read those readings over this API. Authentication is HTTP Basic using credentials issued by BodyTrace.
-
-    Scope and honesty note: BodyTrace does not publish an open, self-serve developer portal - device provisioning and API credentials are arranged through BodyTrace sales, and the reference docs live behind partner onboarding (BodyTrace''s own docs plus integrator guides such as Validic). The one endpoint publicly and repeatedly documented in the wild is the data values pull, `GET /1/device/{imei}/datavalues`, and the device push message payload. Those are marked CONFIRMED below. The remaining operations (raw data messages, device listing/status, alerts, and provisioning) are HONESTLY MODELED from BodyTrace''s documented IMEI-centric data model and RPM feature set; their exact paths and parameters should be verified against the partner documentation you receive with credentials. Modeled operations carry `x-endpoint-status: modeled`; confirmed ones carry `x-endpoint-status: confirmed`.
-
-    Delivery model: readings can be pulled from the data values endpoint on a polling loop, or pushed by BodyTrace to a customer-hosted HTTP endpoint (a webhook you host and secure). There is no documented public WebSocket surface.'
+  title: BodyTrace RPM Data Observations API
+  description: HTTP API for BodyTrace cellular-connected remote patient monitoring (RPM) devices - blood pressure monitors, body-weight scales, and pulse oximeters.
   version: '1.0'
   contact:
     name: BodyTrace
@@ -76,28 +72,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    Imei:
-      name: imei
-      in: path
-      required: true
-      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
-      schema:
-        type: string
-      example: '357872040012345'
-  responses:
-    Unauthorized:
-      description: Missing or invalid HTTP Basic credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The device or resource was not found / not registered.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Values:
       type: object
@@ -154,6 +128,28 @@ components:
           description: Signal strength in negative dBm (raw radio metric).
         values:
           $ref: '#/components/schemas/Values'
+  responses:
+    Unauthorized:
+      description: Missing or invalid HTTP Basic credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The device or resource was not found / not registered.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Imei:
+      name: imei
+      in: path
+      required: true
+      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
+      schema:
+        type: string
+      example: '357872040012345'
   securitySchemes:
     basicAuth:
       type: http
