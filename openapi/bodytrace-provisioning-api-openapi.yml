@@ -48,6 +48,28 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
+  parameters:
+    Imei:
+      name: imei
+      in: path
+      required: true
+      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
+      schema:
+        type: string
+      example: '357872040012345'
+  responses:
+    Unauthorized:
+      description: Missing or invalid HTTP Basic credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Device:
       type: object
@@ -72,16 +94,6 @@ components:
           type: integer
         provisioned:
           type: boolean
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     ProvisionInput:
       type: object
       required:
@@ -103,28 +115,16 @@ components:
           type: string
           format: uri
           description: Optional customer-hosted HTTPS endpoint BodyTrace should POST each measurement to (secured with HTTP Basic credentials you provide).
-  responses:
-    Unauthorized:
-      description: Missing or invalid HTTP Basic credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    Imei:
-      name: imei
-      in: path
-      required: true
-      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
-      schema:
-        type: string
-      example: '357872040012345'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
   securitySchemes:
     basicAuth:
       type: http

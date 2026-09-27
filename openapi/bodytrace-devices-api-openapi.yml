@@ -64,6 +64,28 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    Imei:
+      name: imei
+      in: path
+      required: true
+      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
+      schema:
+        type: string
+      example: '357872040012345'
+  responses:
+    Unauthorized:
+      description: Missing or invalid HTTP Basic credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The device or resource was not found / not registered.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Device:
       type: object
@@ -98,28 +120,6 @@ components:
               type: string
             message:
               type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid HTTP Basic credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The device or resource was not found / not registered.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    Imei:
-      name: imei
-      in: path
-      required: true
-      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
-      schema:
-        type: string
-      example: '357872040012345'
   securitySchemes:
     basicAuth:
       type: http

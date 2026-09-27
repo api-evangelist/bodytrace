@@ -72,33 +72,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    Imei:
+      name: imei
+      in: path
+      required: true
+      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
+      schema:
+        type: string
+      example: '357872040012345'
   schemas:
-    Values:
-      type: object
-      description: Measurement payload. The populated fields depend on the device type. A scale reports weight/tare; a blood pressure monitor reports systolic/diastolic/pulse; a pulse oximeter reports spo2/pulse. An empty values object indicates a heartbeat / connectivity message.
-      properties:
-        unit:
-          type: integer
-          description: Unit setting for the measurement (device-defined).
-        weight:
-          type: integer
-          description: Body weight in grams (scale).
-        tare:
-          type: integer
-          description: Tare / calibration offset in grams (scale).
-        systolic:
-          type: integer
-          description: Systolic blood pressure in mmHg (BP monitor).
-        diastolic:
-          type: integer
-          description: Diastolic blood pressure in mmHg (BP monitor).
-        pulse:
-          type: integer
-          description: Pulse in beats per minute (BP monitor / pulse oximeter).
-        spo2:
-          type: integer
-          description: Blood oxygen saturation as a percentage (pulse oximeter).
-      additionalProperties: true
     Error:
       type: object
       properties:
@@ -128,6 +111,32 @@ components:
           description: Signal strength in negative dBm (raw radio metric).
         values:
           $ref: '#/components/schemas/Values'
+    Values:
+      type: object
+      description: Measurement payload. The populated fields depend on the device type. A scale reports weight/tare; a blood pressure monitor reports systolic/diastolic/pulse; a pulse oximeter reports spo2/pulse. An empty values object indicates a heartbeat / connectivity message.
+      properties:
+        unit:
+          type: integer
+          description: Unit setting for the measurement (device-defined).
+        weight:
+          type: integer
+          description: Body weight in grams (scale).
+        tare:
+          type: integer
+          description: Tare / calibration offset in grams (scale).
+        systolic:
+          type: integer
+          description: Systolic blood pressure in mmHg (BP monitor).
+        diastolic:
+          type: integer
+          description: Diastolic blood pressure in mmHg (BP monitor).
+        pulse:
+          type: integer
+          description: Pulse in beats per minute (BP monitor / pulse oximeter).
+        spo2:
+          type: integer
+          description: Blood oxygen saturation as a percentage (pulse oximeter).
+      additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid HTTP Basic credentials.
@@ -141,15 +150,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    Imei:
-      name: imei
-      in: path
-      required: true
-      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
-      schema:
-        type: string
-      example: '357872040012345'
   securitySchemes:
     basicAuth:
       type: http
