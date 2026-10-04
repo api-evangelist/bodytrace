@@ -95,25 +95,16 @@ components:
         type: string
       example: '357872040012345'
   schemas:
-    DataValue:
+    Error:
       type: object
-      description: A single reading returned by the data values endpoint.
       properties:
-        ts:
-          type: integer
-          format: int64
-          description: Measurement timestamp, epoch milliseconds (UTC).
-        batteryVoltage:
-          type: integer
-          description: Battery voltage in millivolts.
-        signalStrength:
-          type: integer
-          description: Cellular signal strength.
-        rssi:
-          type: integer
-          description: Signal strength in negative dBm (raw radio metric).
-        values:
-          $ref: '#/components/schemas/Values'
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
     Values:
       type: object
       description: Measurement payload. The populated fields depend on the device type. A scale reports weight/tare; a blood pressure monitor reports systolic/diastolic/pulse; a pulse oximeter reports spo2/pulse. An empty values object indicates a heartbeat / connectivity message.
@@ -140,16 +131,25 @@ components:
           type: integer
           description: Blood oxygen saturation as a percentage (pulse oximeter).
       additionalProperties: true
-    Error:
+    DataValue:
       type: object
+      description: A single reading returned by the data values endpoint.
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
+        ts:
+          type: integer
+          format: int64
+          description: Measurement timestamp, epoch milliseconds (UTC).
+        batteryVoltage:
+          type: integer
+          description: Battery voltage in millivolts.
+        signalStrength:
+          type: integer
+          description: Cellular signal strength.
+        rssi:
+          type: integer
+          description: Signal strength in negative dBm (raw radio metric).
+        values:
+          $ref: '#/components/schemas/Values'
   securitySchemes:
     basicAuth:
       type: http
