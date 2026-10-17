@@ -48,14 +48,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: The device or resource was not found / not registered.
+    Unauthorized:
+      description: Missing or invalid HTTP Basic credentials.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid HTTP Basic credentials.
+    NotFound:
+      description: The device or resource was not found / not registered.
       content:
         application/json:
           schema:

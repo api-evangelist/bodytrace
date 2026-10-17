@@ -73,38 +73,38 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: The device or resource was not found / not registered.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid HTTP Basic credentials.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    Imei:
-      name: imei
-      in: path
-      required: true
-      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
-      schema:
-        type: string
-      example: '357872040012345'
+    NotFound:
+      description: The device or resource was not found / not registered.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    DataValue:
       type: object
+      description: A single reading returned by the data values endpoint.
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
+        ts:
+          type: integer
+          format: int64
+          description: Measurement timestamp, epoch milliseconds (UTC).
+        batteryVoltage:
+          type: integer
+          description: Battery voltage in millivolts.
+        signalStrength:
+          type: integer
+          description: Cellular signal strength.
+        rssi:
+          type: integer
+          description: Signal strength in negative dBm (raw radio metric).
+        values:
+          $ref: '#/components/schemas/Values'
     Values:
       type: object
       description: Measurement payload. The populated fields depend on the device type. A scale reports weight/tare; a blood pressure monitor reports systolic/diastolic/pulse; a pulse oximeter reports spo2/pulse. An empty values object indicates a heartbeat / connectivity message.
@@ -131,25 +131,25 @@ components:
           type: integer
           description: Blood oxygen saturation as a percentage (pulse oximeter).
       additionalProperties: true
-    DataValue:
+    Error:
       type: object
-      description: A single reading returned by the data values endpoint.
       properties:
-        ts:
-          type: integer
-          format: int64
-          description: Measurement timestamp, epoch milliseconds (UTC).
-        batteryVoltage:
-          type: integer
-          description: Battery voltage in millivolts.
-        signalStrength:
-          type: integer
-          description: Cellular signal strength.
-        rssi:
-          type: integer
-          description: Signal strength in negative dBm (raw radio metric).
-        values:
-          $ref: '#/components/schemas/Values'
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+  parameters:
+    Imei:
+      name: imei
+      in: path
+      required: true
+      description: The device IMEI (serial). BodyTrace documents this as the IMEI without leading zeros and without the final check digit.
+      schema:
+        type: string
+      example: '357872040012345'
   securitySchemes:
     basicAuth:
       type: http
