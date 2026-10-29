@@ -1,4 +1,4 @@
-# BodyTrace (bodytrace)
+# BodyTrace
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,152 +64,124 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-BodyTrace makes cellular-connected remote patient monitoring (RPM) devices - blood pressure monitors, body-weight scales, and pulse oximeters - that transmit readings directly over the cellular network with no phone, app, Wi-Fi, or Bluetooth pairing required. Each device encrypts measurements end-to-end and sends them to the BodyTrace platform, which exposes the data to healthcare organizations, EHRs, and RPM programs over a simple HTTP API using HTTP Basic authentication. Consumers can pull device readings (data values) on a polling loop or receive them pushed to a customer-hosted HTTP endpoint. BodyTrace sells to organizations, not individuals; API and device provisioning are arranged through BodyTrace sales.
+BodyTrace makes cellular-connected remote patient monitoring (RPM) devices - blood pressure monitors, body-weight scales, and pulse oximeters - that transmit readings directly over the cellular network with no phone, app, Wi-Fi, or Bluetooth pairing required. Each device encrypts measurements end-to-end and sends them to the BodyTrace platform, which exposes the data to healthcare organizations, EHRs, and RPM programs over a simple HTTP API using HTTP Basic authentication. Consumers can pull device readings (data values) on a polling loop or receive them pushed to a configured HTTP endpoint. BodyTrace sells to organizations, not individuals; API and device provisioning are arranged through BodyTrace sales.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bodytrace/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bodytrace/refs/heads/main/apis.yml)
+**Areas:** Remote Patient Monitoring · RPM · Cellular · Medical Devices · Digital Health · Blood Pressure · Connected Devices · IoT
 
-## Public API status
+## BodyTrace on APIs.io
 
-BodyTrace exposes a **real but gated / partner-facing** HTTP API. There is no open self-serve developer portal - devices and API credentials are arranged with BodyTrace sales. The confirmed, publicly documented surface is the data values pull endpoint (`GET /1/device/{imei}/datavalues`) and the device push-message payload; other logical APIs below are honestly modeled from BodyTrace's IMEI-centric data model and marked as such. No public WebSocket API is documented.
+Everything profiled for BodyTrace is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/bodytrace/](https://apis.io/providers/bodytrace/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (5)
 
-- Remote Patient Monitoring
-- RPM
-- Cellular
-- Medical Devices
-- Digital Health
-- Blood Pressure
-- Connected Devices
-- IoT
+- [BodyTrace Alerts API](https://apis.io/apis/bodytrace/bodytrace-alerts-api/) — Modeled threshold and connectivity alerts.
+- [BodyTrace Data Messages API](https://apis.io/apis/bodytrace/bodytrace-data-messages-api/) — Modeled surface for raw per-transmission device messages.
+- [BodyTrace Devices API](https://apis.io/apis/bodytrace/bodytrace-devices-api/) — Modeled device listing and status keyed by IMEI.
+- [BodyTrace Observations API](https://apis.io/apis/bodytrace/bodytrace-observations-api/) — Confirmed pull surface for device readings (data values).
+- [BodyTrace Provisioning API](https://apis.io/apis/bodytrace/bodytrace-provisioning-api/) — Modeled device enrollment and delivery configuration.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-05
-- **Modified:** 2026-07-05
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### BodyTrace Observations (Data Values) API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Retrieve the latest and historical device readings (data values) for a provisioned device by IMEI - weight, systolic, diastolic, pulse, SpO2, battery voltage, and signal strength - filtered by name and time range. This is the confirmed, documented pull surface at `GET /1/device/{imei}/datavalues`.
+- [Bodytrace Agentic Access](https://apis.io/agentic-access/bodytrace/bodytrace-agentic-access/)
 
-- **Human URL:** [https://www.bodytrace.com/medical/](https://www.bodytrace.com/medical/)
-- **Base URL:** `https://us.data.bodytrace.com/1`
+#### Collections (6)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- Observations
-- Data Values
-- Readings
+- [BodyTrace RPM Data API](https://apis.io/collections/bodytrace/open-bodytrace/)
+- [BodyTrace RPM Data Alerts API](https://apis.io/collections/bodytrace/open-bodytrace-alerts-api/)
+- [BodyTrace RPM Data Alerts Data Messages API](https://apis.io/collections/bodytrace/open-bodytrace-data-messages-api/)
+- [BodyTrace RPM Data Alerts Devices API](https://apis.io/collections/bodytrace/open-bodytrace-devices-api/)
+- [BodyTrace RPM Data Alerts Observations API](https://apis.io/collections/bodytrace/open-bodytrace-observations-api/)
+- [BodyTrace RPM Data Alerts Provisioning API](https://apis.io/collections/bodytrace/open-bodytrace-provisioning-api/)
 
-#### Properties
+#### Security (2)
 
-- [Documentation](https://www.bodytrace.com/medical/)
-- [OpenAPI](openapi/bodytrace-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/bodytrace.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/bodytrace.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### BodyTrace Data Messages API
+- [Bodytrace Authentication](https://apis.io/security/bodytrace/bodytrace-authentication/)
+- [Bodytrace Domain Security](https://apis.io/security/bodytrace/bodytrace-domain-security/)
 
-Retrieve the raw, per-transmission data messages a device has sent - each carrying deviceId, ts (epoch ms), batteryVoltage, rssi/signalStrength, and a values object - for a device by IMEI over a time range. Modeled from BodyTrace's documented device message payload; exact query surface is gated behind account credentials.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://www.bodytrace.com/medical/](https://www.bodytrace.com/medical/)
-- **Base URL:** `https://us.data.bodytrace.com/1`
+Published plans, tiers and prices.
 
-#### Tags
+- [Bodytrace Plans Pricing](https://apis.io/plans/bodytrace/bodytrace-plans-pricing/)
 
-- Data Messages
-- Raw Payloads
-- Telemetry
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://www.bodytrace.com/medical/)
-- [OpenAPI](openapi/bodytrace-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Bodytrace Rate Limits](https://apis.io/rate-limits/bodytrace/bodytrace-rate-limits/)
 
-### BodyTrace Devices API
+#### FinOps (1)
 
-List the cellular devices in an account and read a single device's status - last seen, battery, signal, and provisioning state - keyed by IMEI. Modeled from BodyTrace's device/IMEI-centric data model; the account-scoped device listing is behind partner credentials.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://www.bodytrace.com/medical/](https://www.bodytrace.com/medical/)
-- **Base URL:** `https://us.data.bodytrace.com/1`
+- [Bodytrace Finops](https://apis.io/finops/bodytrace/bodytrace-finops/)
 
-#### Tags
+## Where to find this API
 
-- Devices
-- Status
-- Fleet
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://www.bodytrace.com/medical/)
-- [OpenAPI](openapi/bodytrace-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-### BodyTrace Alerts API
-
-Read threshold and connectivity alerts raised for a device - for example a blood-pressure reading outside a configured range or a low-battery / offline condition. Modeled RPM capability; alerting configuration is arranged with BodyTrace and gated behind credentials.
-
-- **Human URL:** [https://www.bodytrace.com/medical/](https://www.bodytrace.com/medical/)
-- **Base URL:** `https://us.data.bodytrace.com/1`
-
-#### Tags
-
-- Alerts
-- Thresholds
-- Notifications
-
-#### Properties
-
-- [Documentation](https://www.bodytrace.com/medical/)
-- [OpenAPI](openapi/bodytrace-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-### BodyTrace Provisioning API
-
-Associate a device (by IMEI) with an account, patient, or program and configure where its measurements are delivered (a pushed HTTP endpoint). Modeled from BodyTrace's documented onboarding flow; provisioning is completed with BodyTrace and gated behind credentials.
-
-- **Human URL:** [https://www.bodytrace.com/medical/](https://www.bodytrace.com/medical/)
-- **Base URL:** `https://us.data.bodytrace.com/1`
-
-#### Tags
-
-- Provisioning
-- Enrollment
-- Registration
-
-#### Properties
-
-- [Documentation](https://www.bodytrace.com/medical/)
-- [OpenAPI](openapi/bodytrace-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-### BodyTrace Measurement Webhook (Push) API
-
-Instead of polling, BodyTrace can push each measurement to a customer HTTP endpoint. The device platform POSTs a JSON body (deviceId, ts, batteryVoltage, rssi, values) to a URL you host, secured with HTTP Basic credentials you define. Confirmed real-time delivery model - the endpoint is hosted by the consumer, not by BodyTrace.
-
-- **Human URL:** [https://www.bodytrace.com/medical/](https://www.bodytrace.com/medical/)
-- **Base URL:** `https://your-endpoint.example.com`
-
-#### Tags
-
-- Webhook
-- Push
-- Data Forwarding
-
-#### Properties
-
-- [Documentation](https://www.bodytrace.com/medical/)
-- [OpenAPI](openapi/bodytrace-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/bodytrace)
 - [Website](https://www.bodytrace.com)
 - [Documentation](https://www.bodytrace.com/medical/)
-- [Plans](plans/bodytrace-plans-pricing.yml)
-- [Rate Limits](rate-limits/bodytrace-rate-limits.yml)
-- [Fin Ops](finops/bodytrace-finops.yml)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 27.4** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 50.2 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 22.6 |
+| Access clarity | 5.3 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 9.4** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/bodytrace/](https://apis.io/providers/bodytrace/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for BodyTrace: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/bodytrace/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
